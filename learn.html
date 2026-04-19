@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Online Learning Platforms — Code World</title>
+  <meta name="description" content="Curated list of online learning platforms with descriptions and quick filters." />
+  <style>
+    :root{
+      --bg:#071018; --card:#0f1724; --muted:#9fbfc6; --accent:#0ea5a4;
+      --text:#e6eef8; --maxw:1100px; --radius:10px;
+      font-family: Inter, "Segoe UI", Roboto, system-ui, -apple-system, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:linear-gradient(180deg,#071018 0%, #071827 100%);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:28px 18px 60px;
+    }
+    .container{max-width:var(--maxw); margin:0 auto;}
+
+    /* Header */
+    header.site-header{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      margin-bottom:20px;
+    }
+    .brand{display:flex; gap:12px; align-items:center;}
+    .logo{
+      width:56px; height:56px; border-radius:12px; background:linear-gradient(135deg,#06b6d4,#0ea5a4);
+      display:flex; align-items:center; justify-content:center; font-weight:800; color:#042022; font-size:18px;
+      box-shadow:0 6px 20px rgba(2,6,23,0.6);
+    }
+    h1{font-size:1.35rem; margin:0; letter-spacing:-0.2px}
+    p.lead{margin:6px 0 0; color:var(--muted); font-size:0.95rem}
+
+    /* Controls */
+    .controls{
+      display:flex; gap:12px; align-items:center; margin:18px 0 22px; flex-wrap:wrap;
+    }
+    .search {
+      flex:1 1 320px;
+      display:flex; gap:8px; align-items:center;
+      background:rgba(255,255,255,0.02); padding:8px; border-radius:10px; border:1px solid rgba(255,255,255,0.03);
+    }
+    .search input{
+      background:transparent; border:0; outline:none; color:var(--text); font-size:0.95rem; width:100%;
+      padding:8px 6px;
+    }
+    .filter { display:flex; gap:8px; align-items:center; }
+    .chip{
+      background:transparent; border:1px solid rgba(255,255,255,0.04); color:var(--muted);
+      padding:8px 10px; border-radius:999px; cursor:pointer; font-size:0.9rem;
+    }
+    .chip.active{ background:rgba(14,165,164,0.12); color:var(--text); border-color:rgba(14,165,164,0.18) }
+
+    /* Grid */
+    .grid{
+      display:grid; grid-template-columns:repeat(3,1fr); gap:18px;
+    }
+    @media (max-width:980px){ .grid{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:640px){ .grid{grid-template-columns:1fr} .controls{flex-direction:column; align-items:stretch} }
+
+    /* Card */
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:var(--radius); padding:16px; border:1px solid rgba(255,255,255,0.03);
+      box-shadow:0 8px 24px rgba(2,6,23,0.45);
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .card .title{display:flex; align-items:center; gap:12px}
+    .fav{
+      width:44px; height:44px; border-radius:8px; background:rgba(255,255,255,0.02);
+      display:flex; align-items:center; justify-content:center; font-weight:700; color:var(--accent);
+      font-size:14px;
+    }
+    .card h3{margin:0; font-size:1.02rem}
+    .card p{margin:0; color:var(--muted); font-size:0.92rem; line-height:1.35}
+    .meta{display:flex; gap:8px; align-items:center; flex-wrap:wrap}
+    .tag{font-size:0.82rem; color:var(--muted); background:rgba(255,255,255,0.02); padding:6px 8px; border-radius:8px; border:1px solid rgba(255,255,255,0.02)}
+
+    .card .actions{display:flex; gap:8px; margin-top:8px}
+    .btn{
+      background:var(--accent); color:#042022; padding:8px 12px; border-radius:8px; border:0; cursor:pointer; font-weight:700;
+      text-decoration:none; display:inline-flex; align-items:center; gap:8px; font-size:0.9rem;
+    }
+    .btn.ghost{ background:transparent; color:var(--muted); border:1px solid rgba(255,255,255,0.04); font-weight:600 }
+
+    /* Footer (site footer) */
+    .site-footer {
+      background: #0f1724;
+      color: #e6eef8;
+      padding: 36px 20px;
+      border-top: 4px solid #0ea5a4;
+      margin-top: 28px;
+      border-radius: 10px;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr 320px;
+      gap: 28px;
+      align-items: start;
+    }
+    .footer-about h3,
+    .footer-contact h3,
+    .footer-form h3 {
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+      color: #ffffff;
+    }
+    .footer-about p,
+    .footer-contact p {
+      margin: 0 0 10px;
+      line-height: 1.5;
+      color: #cfe8f2;
+      font-size: 0.95rem;
+    }
+    .footer-contact a { color: #9fe6e2; text-decoration: none; }
+    .footer-contact a:hover, .footer-contact a:focus { color: #ffffff; text-decoration: underline; }
+
+    .footer-form form { display:flex; flex-direction:column; gap:10px; }
+    .footer-form input[type="text"],
+    .footer-form input[type="email"],
+    .footer-form textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.02);
+      color: #e6eef8;
+      font-size: 0.95rem;
+      outline: none;
+      transition: box-shadow .15s ease, border-color .15s ease;
+    }
+    .footer-form input:focus, .footer-form textarea:focus {
+      border-color: #0ea5a4;
+      box-shadow: 0 0 0 4px rgba(14,165,164,0.08);
+    }
+    .footer-form button[type="submit"] {
+      background: #0ea5a4;
+      color: #062024;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .form-feedback { margin:6px 0 0; font-size:0.92rem; min-height:1.2em; color:#cfe8f2; }
+    .form-feedback.error { color:#ffb4b4; }
+    .form-feedback.success { color:#b7f3e8; }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.04);
+      padding-top: 18px;
+      max-width: 1100px;
+      margin: 18px auto 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .social-links a { color: #9fe6e2; margin-right: 12px; text-decoration: none; font-size: 0.95rem; }
+    .social-links a:hover, .social-links a:focus { color: #ffffff; text-decoration: underline; }
+    .site-footer .copyright { color: #9fbfc6; font-size: 0.92rem; margin: 0; }
+
+    .sr-only {
+      position: absolute !important;
+      height: 1px; width: 1px;
+      overflow: hidden;
+      clip: rect(1px, 1px, 1px, 1px);
+      white-space: nowrap;
+      border: 0; padding: 0; margin: -1px;
+    }
+
+    /* Page footer small */
+    .page-footer{ margin-top:18px; color:var(--muted); font-size:0.9rem; display:flex; justify-content:space-between; gap:12px; align-items:center; flex-wrap:wrap }
+    .page-footer a{ color:var(--muted); text-decoration:none }
+    .page-footer a:hover{ color:var(--text); text-decoration:underline }
+
+    /* Empty state */
+    .empty{ text-align:center; padding:28px; color:var(--muted); background:transparent; border-radius:8px; border:1px dashed rgba(255,255,255,0.03) }
+
+    @media (max-width:880px) {
+      .footer-inner { grid-template-columns: 1fr; gap:18px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width:480px) {
+      .footer-form textarea { min-height: 90px; }
+      .footer-contact p, .footer-about p { font-size: 0.92rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="brand">
+        <div class="logo">CW</div>
+        <div>
+          <h1>Code World </h1>
+          <p class="lead">Curated list of popular platforms for coding, data, design, and professional skills.</p>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <p style="margin:0; color:var(--muted)">Masvingo • Updated 2025</p>
+      </div>
+    </header>
+
+    <div class="controls" aria-hidden="false">
+      <div class="search" role="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="opacity:.8"><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <input id="q" type="search" placeholder="Search platforms, topics, or tags (e.g., data, coding, free)" aria-label="Search platforms">
+      </div>
+
+      <div class="filter" role="toolbar" aria-label="Filter by topic">
+        <button class="chip active" data-filter="all">All</button>
+        <button class="chip" data-filter="coding">Coding</button>
+        <button class="chip" data-filter="data">Data</button>
+        <button class="chip" data-filter="design">Design</button>
+        <button class="chip" data-filter="free">Free</button>
+        <button class="chip" data-filter="cert">Certs</button>
+      </div>
+    </div>
+
+    <main id="list" class="grid" aria-live="polite">
+      <!-- 1 -->
+      <article class="card" data-tags="coding;paid;cert">
+        <div class="title"><div class="fav">C</div><div><h3>Coursera</h3><p class="muted">University-backed courses and certificates.</p></div></div>
+        <p>Structured university courses, specializations, and professional certificates across many fields.</p>
+        <div class="meta"><span class="tag">University</span><span class="tag">Certs</span><span class="tag">Paid</span></div>
+        <div class="actions"><a class="btn" href="https://www.coursera.org" target="_blank" rel="noopener">Visit</a><a class="btn ghost" href="https://www.coursera.org" target="_blank" rel="noopener">More</a></div>
+      </article>
+
+      <!-- 2 -->
+      <article class="card" data-tags="coding;free;cert">
+        <div class="title"><div class="fav">E</div><div><h3>edX</h3><p class="muted">High-quality university courses and MicroMasters.</p></div></div>
+        <p>Academic courses with verified certificates and audit options for free access to materials.</p>
+        <div class="meta"><span class="tag">University</span><span class="tag">Free option</span></div>
+        <div class="actions"><a class="btn" href="https://www.edx.org" target="_blank" rel="noopener">Visit</a><a class="btn ghost" href="https://www.edx.org" target="_blank" rel="noopener">More</a></div>
+      </article>
+
+      <!-- 3 -->
+      <article class="card" data-tags="coding;paid">
+        <div class="title"><div class="fav">U</div><div><h3>Udemy</h3><p class="muted">Marketplace of practical, project-based classes.</p></div></div>
+        <p>Thousands of on-demand courses across topics; frequent sales make many courses affordable.</p>
+        <div class="meta"><span class="tag">Marketplace</span><span class="tag">Paid</span></div>
+        <div class="actions"><a class="btn" href="https://www.udemy.com" target="_blank" rel="noopener">Visit</a><a class="btn ghost" href="https://www.udemy.com" target="_blank" rel="noopener">More</a></div>
+      </article>
+
+      <!-- 4 -->
+      <article class="card" data-tags="free;coding;beginner">
+        <div class="title"><div class="fav">K</div><div><h3>Khan Academy</h3><p class="muted">Free lessons for school subjects and computing basics.</p></div></div>
+        <p>Excellent for foundational learning in math, computing, and early CS concepts.</p>
+        <div class="meta"><span class="tag">Free</span><span class="tag">Foundations</span></div>
+        <div class="actions"><a class="btn" href="https://www.khanacademy.org" target="_blank" rel="noopener">Visit</a><a class="btn ghost" href="https://www.khanacademy.org" target="_blank" rel="noopener">More</a></div>
+      </article>
+
+      <!-- 5 -->
+      <article class="card" data-tags="coding;interactive;free">
+        <div class="title"><div class="fav">CC</div><div><h3>Codecademy</h3><p class="muted">Interactive coding lessons and career paths.</p></div></div>
+        <p>Hands-on exercises and guided career tracks for web, data, and backend development.</p>
+        <div class="meta"><span class="tag">Interactive</span><span class="tag">Free option</span></div>
+        <div class="actions"><a class="btn" href="https://www.codecademy.com" target="_blank" rel="noopener">Visit</a><a class="btn ghost" href="https://www.codecademy.com" target="_blank" rel="noopener">More</a></div>
+      </article>
+
+      <!-- 6 -->
+      <article class="card" data-tags="coding;free;project">
+        <div class="title"><div class="fav">F</div><div><h3>freeCodeCamp</h3><p class="muted">Free, project-based web development curriculum.</p></div></div>
+        <p>Build projects, earn free certifications, and create a developer portfolio.</p>
+        <div class="meta"><span class="tag">Free</span><span class="tag">Projects</span></div>
+        <div class="actions"><a class="btn" href="https://www.freecodecamp.org" target="_blank" rel="noopener">Visit</a><a class="btn ghost" href="https://www.freecodecamp.org" target="_blank" rel="noopener">More</a></div>
+      </article>
+
+      <!-- 7 -->
+      <article class="card" data-tags="data;paid;interactive">
+        <div class="title"><div class="fav">DC</div><div><h3>DataCamp</h3><p class="muted">Interactive data science courses in Python, R, and SQL.</p></div></div>
+        <p>Short interactive exercises and tracks focused on data skills and practical tasks.</p>
+        <div class="meta"><span class="tag">Data</span><span class="tag">Interactive</span></div>
+        <div class="actions"><a class="btn" href="https://www.datacamp.com" target="_blank" rel="noopener">Visit</a><a class="btn ghost" href="https://www.datacamp.com" target="_blank" rel="noopener">More</a></div>
+      </article>
+
+      <!-- 8 -->
+      <article class="card" data-tags="coding;paid;nanodegree">
+        <div class="title"><div class="fav">U</div><div><h3>Udacity</h3><p class="muted">Nanodegree programs for industry skills.</p></div></div>
+        <p>Project-based nanodegrees with mentor support for AI, cloud, and autonomous systems.</p>
+        <div class="meta"><span class="tag">Nanodegree</span><span class="tag">Career</span></div>
+        <div class="actions"><a class="btn" href="https://www.udacity.com" target="_blank" rel="noopener">Visit</a><a class="btn ghost" href="https://www.udacity.com" target="_blank" rel="noopener">More</a></div>
+      </article>
+
+      <!-- 9 -->
+      <article class="card" data-tags="creative;paid;subscription">
+        <div class="title"><div class="fav">S</div><div><h3>Skillshare</h3><p class="muted">Creative classes in design, illustration, and photography.</p></div></div>
+        <p>Project-focused creative classes with community feedback and short-format lessons.</p>
+        <div class="meta"><span class="tag">Creative</span><span class="tag">Subscription</span></div>
+        <div class="actions"><a class="btn" href="https://www.skillshare.com" target="_blank" rel="noopener">Visit</a><a class="btn ghost" href="https://www.skillshare.com" target="_blank" rel="noopener">More</a></div>
+      </article>
+
+      <!-- 10 -->
+      <article class="card" data-tags="coding;subscription;beginner">
+        <div class="title"><div class="fav">L</div><div><h3>LinkedIn Learning</h3><p class="muted">Professional courses across tech, business, and creative skills.</p></div></div>
+        <p>Short courses tied to career development and LinkedIn profile certifications.</p>
+        <div class="meta"><span class="tag">Professional</span><span class="tag">Certs</span></div>
+        <div class="actions"><a class="btn" href="https://www.linkedin.com/learning" target="_blank" rel="noopener">Visit</a><a class="btn ghost" href="https://www.linkedin.com/learning" target="_blank" rel="noopener">More</a></div>
+      </article>
+
+      <!-- 11 -->
+      <article class="card" data-tags="coding;subscription;beginner">
+        <div class="title"><div class="fav">P</div><div><h3>Pluralsight</h3><p class="muted">Skill assessments and tech learning paths.</p></div></div>
+        <p>Skill checks, guided learning paths, and enterprise training for developers and IT pros.</p>
+        <div class="meta"><span class="tag">Tech</span><span class="tag">Assessments</span></div>
+        <div class="actions"><a class="btn" href="https://www.pluralsight.com" target="_blank" rel="noopener">Visit</a><a class="btn ghost" href="https://www.pluralsight.com" target="_blank" rel="noopener">More</a></div>
+      </article>
+
+      <!-- 12 -->
+      <article class="card" data-tags="design;subscription;creative">
+        <div class="title"><div class="fav">T</div><div><h3>Treehouse</h3><p class="muted">Beginner-friendly tracks for web development and design.</p></div></div>
+        <p>Guided tracks, quizzes, and projects for learners starting web and UX careers.</p>
+        <div class="meta"><span class="tag">Beginner</span><span class="tag">Tracks</span></div>
+        <div class="actions"><a class="btn" href="https://teamtreehouse.com" target="_blank" rel="noopener">Visit</a><a class="btn ghost" href="https://teamtreehouse.com" target="_blank" rel="noopener">More</a></div>
+      </article>
+
+      <!-- 13 -->
+      <article class="card" data-tags="university;free;open">
+        <div class="title"><div class="fav">M</div><div><h3>MIT OpenCourseWare</h3><p class="muted">Free access to MIT course materials.</p></div></div>
+        <p>Study real MIT course content for free across engineering, CS, and sciences.</p>
+        <div class="meta"><span class="tag">Open</span><span class="tag">Free</span></div>
+        <div class="actions"><a class="btn" href="https://ocw.mit.edu" target="_blank" rel="noopener">Visit</a><a class="btn ghost" href="https://ocw.mit.edu" target="_blank" rel="noopener">More</a></div>
+      </article>
+
+      <!-- 14 -->
+      <article class="card" data-tags="university;free;open">
+        <div class="title"><div class="fav">H</div><div><h3>Harvard Online / HarvardX</h3><p class="muted">Harvard's online courses and professional programs.</p></div></div>
+        <p>High-quality university content and professional certificates from Harvard.</p>
+        <div class="meta"><span class="tag">University</span><span class="tag">Certs</span></div>
+        <div class="actions"><a class="btn" href="https://online-learning.harvard.edu" target="_blank" rel="noopener">Visit</a><a class="btn ghost" href="https://online-learning.harvard.edu" target="_blank" rel="noopener">More</a></div>
+      </article>
+
+      <!-- 15 -->
+      <article class="card" data-tags="free;open;courses">
+        <div class="title"><div class="fav">A</div><div><h3>Alison</h3><p class="muted">Free online courses with optional paid certificates.</p></div></div>
+        <p>Short free courses and low-cost certificates for career skills and business topics.</p>
+        <div class="meta"><span class="tag">Free</span><span class="tag">Certificates</span></div>
+        <div class="actions"><a class="btn" href="https://alison.com" target="_blank" rel="noopener">Visit</a><a class="btn ghost" href="https://alison.com" target="_blank" rel="noopener">More</a></div>
+      </article>
+
+      <!-- 16 -->
+      <article class="card" data-tags="open;courses;free">
+        <div class="title"><div class="fav">S</div><div><h3>Saylor Academy</h3><p class="muted">Nonprofit offering free college-level courses.</p></div></div>
+        <p>Free college-level courses and pathways to low-cost credit options.</p>
+        <div class="meta"><span class="tag">Nonprofit</span><span class="tag">Free</span></div>
+        <div class="actions"><a class="btn" href="https://www.saylor.org" target="_blank" rel="noopener">Visit</a><a class="btn ghost" href="https://www.saylor.org" target="_blank" rel="noopener">More</a></div>
+      </article>
+
+      <!-- 17 -->
+      <article class="card" data-tags="data;cert;paid">
+        <div class="title"><div class="fav">G</div><div><h3>Google Digital Garage</h3><p class="muted">Free courses and certifications in digital skills.</p></div></div>
+        <p>Practical digital skills, marketing, and data courses with free certificates from Google.</p>
+        <div class="meta"><span class="tag">Free</span><span class="tag">Certs</span></div>
+        <div class="actions"><a class="btn" href="https://learndigital.withgoogle.com/digitalgarage" target="_blank" rel="noopener">Visit</a><a class="btn ghost" href="https://learndigital.withgoogle.com/digitalgarage" target="_blank" rel="noopener">More</a></div>
+      </article>
+
+      <!-- 18 -->
+      <article class="card" data-tags="professional;free;learn">
+        <div class="title"><div class="fav">MS</div><div><h3>Microsoft Learn</h3><p class="muted">Role-based learning paths for Microsoft technologies.</p></div></div>
+        <p>Free hands-on modules and certification prep for Azure, Microsoft 365, and more.</p>
+        <div class="meta"><span class="tag">Free</span><span class="tag">Certs</span></div>
+        <div class="actions"><a class="btn" href="https://learn.microsoft.com" target="_blank" rel="noopener">Visit</a><a class="btn ghost" href="https://learn.microsoft.com" target="_blank" rel="noopener">More</a></div>
+      </article>
+
+      <!-- 19 -->
+      <article class="card" data-tags="professional;free;enterprise">
+        <div class="title"><div class="fav">IB</div><div><h3>IBM SkillsBuild</h3><p class="muted">Free technical and professional skills training with badges.</p></div></div>
+        <p>Enterprise-aligned technical skills, badges, and career pathways for learners and job-seekers.</p>
+        <div class="meta"><span class="tag">Enterprise</span><span class="tag">Free</span></div>
+        <div class="actions"><a class="btn" href="https://skillsbuild.org" target="_blank" rel="noopener">Visit</a><a class="btn ghost" href="https://skillsbuild.org" target="_blank" rel="noopener">More</a></div>
+      </article>
+
+      <!-- 20 -->
+      <article class="card" data-tags="creative;paid;masterclass">
+        <div class="title"><div class="fav">M</div><div><h3>MasterClass</h3><p class="muted">Lessons taught by world-class practitioners.</p></div></div>
+        <p>High-production-value lessons for inspiration and craft from well-known experts.</p>
+        <div class="meta"><span class="tag">Creative</span><span class="tag">Subscription</span></div>
+        <div class="actions"><a class="btn" href="https://www.masterclass.com" target="_blank" rel="noopener">Visit</a><a class="btn ghost" href="https://www.masterclass.com" target="_blank" rel="noopener">More</a></div>
+      </article>
+
+      <!-- 21 -->
+      <article class="card" data-tags="open;courses;free">
+        <div class="title"><div class="fav">OL</div><div><h3>OpenLearn</h3><p class="muted">Free courses from The Open University.</p></div></div>
+        <p>High-quality open educational resources and short courses for lifelong learners.</p>
+        <div class="meta"><span class="tag">Open</span><span class="tag">Free</span></div>
+        <div class="actions"><a class="btn" href="https://www.open.edu/openlearn" target="_blank" rel="noopener">Visit</a><a class="btn ghost" href="https://www.open.edu/openlearn" target="_blank" rel="noopener">More</a></div>
+      </article>
+
+      <!-- 22 -->
+      <article class="card" data-tags="coding;bootcamp;paid">
+        <div class="title"><div class="fav">G</div><div><h3>General Assembly</h3><p class="muted">Bootcamps and short courses in web, data, and UX.</p></div></div>
+        <p>Immersive bootcamps and career services for learners seeking job transitions.</p>
+        <div class="meta"><span class="tag">Bootcamp</span><span class="tag">Career</span></div>
+        <div class="actions"><a class="btn" href="https://generalassemb.ly" target="_blank" rel="noopener">Visit</a><a class="btn ghost" href="https://generalassemb.ly" target="_blank" rel="noopener">More</a></div>
+      </article>
+
+      <!-- 23 -->
+      <article class="card" data-tags="coding;free;community">
+        <div class="title"><div class="fav">S</div><div><h3>Stack Overflow</h3><p class="muted">Community Q&A and developer documentation.</p></div></div>
+        <p>Problem-solving, community help, and practical code examples for developers.</p>
+        <div class="meta"><span class="tag">Community</span><span class="tag">Free</span></div>
+        <div class="actions"><a class="btn" href="https://stackoverflow.com" target="_blank" rel="noopener">Visit</a><a class="btn ghost" href="https://stackoverflow.com" target="_blank" rel="noopener">More</a></div>
+      </article>
+
+      <!-- 24 -->
+      <article class="card" data-tags="design;creative;subscription">
+        <div class="title"><div class="fav">AD</div><div><h3>Adobe Learn</h3><p class="muted">Official tutorials for Adobe Creative Cloud tools.</p></div></div>
+        <p>Tutorials and workflows for Photoshop, Illustrator, Premiere, and other Adobe apps.</p>
+        <div class="meta"><span class="tag">Design</span><span class="tag">Creative</span></div>
+        <div class="actions"><a class="btn" href="https://helpx.adobe.com/learn.html" target="_blank" rel="noopener">Visit</a><a class="btn ghost" href="https://helpx.adobe.com/learn.html" target="_blank" rel="noopener">More</a></div>
+      </article>
+    </main>
+
+    <div id="empty" class="empty" style="display:none">No platforms match your search or filter.</div>
+
+    <!-- Site footer with About, Contact, Form, Socials -->
+    <footer class="site-footer" role="contentinfo" aria-label="Site footer">
+      <div class="footer-inner">
+        <div class="footer-about">
+          <h3>About Code World</h3>
+          <p>Code World is a programming languages encyclopedia and learning hub. We curate tutorials, platform guides, and resources to help learners and professionals grow their skills.</p>
+          <p style="margin-top:8px; color:var(--muted)">Founded by King Samuel Gonese • Masvingo, Zimbabwe</p>
+        </div>
+
+        <div class="footer-contact">
+          <h3>Contact</h3>
+          <p><strong>Email</strong>: <a href="mailto:hello@codeworld.example">hello@codeworld.example</a></p>
+          <p><strong>Phone</strong>: +263 77 123 4567</p>
+          <p><strong>Address</strong>: Masvingo, Zimbabwe</p>
+         <div style="margin-top:8px">
+            <strong>Follow</strong>
+            <div class="social-links" style="margin-top:6px">
+              <a href="#" aria-label="Twitter">Twitter</a>
+              <a href="#" aria-label="GitHub">GitHub</a>
+              <a href="#" aria-label="LinkedIn">LinkedIn</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-form">
+
+        <div class="footer-form">
+          <h3>Send Us a Message</h3>
+          <form id="footerContactForm" novalidate>
+            <label for="f-name" class="sr-only">Name</label>
+            <input id="f-name" name="name" type="text" placeholder="Your name" required>
+
+            <label for="f-email" class="sr-only">Email</label>
+            <input id="f-email" name="email" type="email" placeholder="Your email" required>
+
+            <label for="f-message" class="sr-only">Message</label>
+            <textarea id="f-message" name="message" rows="3" placeholder="Your message" required></textarea>
+
+            <button type="submit" class="btn">Send</button>
+            <p id="formFeedback" class="form-feedback" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>© <strong>Code World</strong> — Curated learning resources</div>
+        <div class="footer-links"><a href="#">About</a> · <a href="#">Contact</a> · <a href="#">Privacy</a></div>
+        <p class="copyright">© <span id="currentYear"></span> Code World. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <div class="page-footer" style="margin-top:10px">
+      <div>Made with care • Code World</div>
+      <div><a href="#">Terms</a> · <a href="#">Sitemap</a></div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      // Search & filter
+      const q = document.getElementById('q');
+      const chips = Array.from(document.querySelectorAll('.chip'));
+      const cards = Array.from(document.querySelectorAll('#list .card'));
+      const empty = document.getElementById('empty');
+      let activeFilter = 'all';
+      function normalize(s){ return (s||'').toString().toLowerCase(); }
+      function applyFilter(){
+        const term = normalize(q.value);
+        let visible = 0;
+        cards.forEach(card=>{
+          const tags = normalize(card.getAttribute('data-tags') || '');
+          const title = normalize(card.querySelector('h3').textContent);
+          const desc = normalize(card.querySelector('p').textContent);
+          const matchesFilter = (activeFilter === 'all') || tags.split(';').includes(activeFilter);
+          const matchesSearch = !term || title.includes(term) || desc.includes(term) || tags.includes(term);
+          if(matchesFilter && matchesSearch){
+            card.style.display = '';
+            visible++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+        empty.style.display = visible ? 'none' : '';
+      }
+      q.addEventListener('input', applyFilter);
+      chips.forEach(chip=>{
+        chip.addEventListener('click', ()=>{
+          chips.forEach(c=>c.classList.remove('active'));
+          chip.classList.add('active');
+          activeFilter = chip.dataset.filter || 'all';
+          applyFilter();
+        });
+      });
+      window.addEventListener('keydown', (e)=>{
+        if(e.key === '/' && document.activeElement !== q){
+          e.preventDefault();
+          q.focus();
+        }
+      });
+      applyFilter();
+
+      // Footer contact form handling
+      const form = document.getElementById('footerContactForm');
+      const feedback = document.getElementById('formFeedback');
+      function isValidEmail(email){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
+      if(form){
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          feedback.textContent = '';
+          feedback.className = 'form-feedback';
+          const name = form.name.value.trim();
+          const email = form.email.value.trim();
+          const message = form.message.value.trim();
+          if (!name || !email || !message) {
+            feedback.textContent = 'Please fill in all fields.';
+            feedback.classList.add('error');
+            return;
+          }
+          if (!isValidEmail(email)) {
+            feedback.textContent = 'Please enter a valid email address.';
+            feedback.classList.add('error');
+            return;
+          }
+          feedback.textContent = 'Sending...';
+          feedback.classList.remove('error');
+          setTimeout(function () {
+            feedback.textContent = 'Thanks! Your message has been received.';
+            feedback.classList.add('success');
+            form.reset();
+          }, 900);
+        });
+      }
+
+      // Update copyright year
+      const yearEl = document.getElementById('currentYear');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // Accessibility: focus outline for keyboard users only
+      function handleFirstTab(e) {
+        if (e.key === 'Tab') {
+          document.body.classList.add('user-is-tabbing');
+          window.removeEventListener('keydown', handleFirstTab);
+        }
+      }
+      window.addEventListener('keydown', handleFirstTab);
+    })();
+  </script>
+</body>
+</html>
